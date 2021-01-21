@@ -1,0 +1,35 @@
+<div>
+    <div class="banner-content" id="lecturers">
+    </div>
+    <mat-form-field class="mat-form-field-wrapper" >
+    <input matInput type="text" placeholder="Search text" [(ngModel)]="quantityValue" class="form-control form-control-sm mr-3 w-75"
+      aria-label="Search">
+      <button (click)="onFilter(quantityValue)" mat-button="" class="btn btn-primary" type="submit" >Search</button>
+    </mat-form-field>
+    <div style=" margin-top: -50px; margin-bottom: 0px;">
+        <section class="ab-info-main py-md-5 py-4" >
+          <div class="row mt-4 lecture" >
+            <div class="card-div" *ngFor="let image of filterObject" style="width: 23%;">
+              <mat-card class="example-card" >
+                <mat-card-header class="mat-card-header-text" style="justify-content: center ;height: 70px;">
+                  <mat-card-title>{{image.name}} {{image.surname}}</mat-card-title>
+                </mat-card-header>
+
+                  <div _ngcontent-vdh-c239="" class="team-img">
+                    <img _ngcontent-vdh-c239="" src= 'http://3.10.154.164/return-files/{{image.imageUrl}}' alt="user-image" class="img-fluid rounded-circle">
+                  </div>
+                  <mat-card-content>
+                    <p style="margin-top: 11%;height: 90px;">
+                      {{image.text}}
+                    </p>
+                  </mat-card-content>
+                  <mat-card-actions>
+                    <button mat-button class="btn btn-primary" [routerLink]="['/lecturerprofile', image.idUser]" >See More</button>
+                  </mat-card-actions>
+              </mat-card>
+            </div>
+          </div>
+        </section>
+    </div>
+
+</div>

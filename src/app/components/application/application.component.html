@@ -1,0 +1,135 @@
+<div class="card" style="display:none">
+  <p-steps [readonly]="true" [activeIndex]="active" ></p-steps>
+</div>
+
+
+<div class="container">
+  <div class="register-form" style="float:right; opacity: 92%;" >
+    <div class="example-container">
+      <form [formGroup]="applicationForm" (ngSubmit)="onSubmitApplication()">
+          <div class="form-group">
+            <div class="avatar-wrapper">
+              <label for="file-input" style="display: contents;">
+                  <img class="profile-pic" for="file-input" [src]="previewUrl" *ngIf="previewUrl" />
+                  <i class="fa fa-user" aria-hidden="true" for="file-input"></i>
+              </label>
+              <input type="file"  id="file-input" class="file-upload" name="file-input" accept="image/*" style="display: none;width: 100%;height: 100%;" (change)="selectFiles($event)" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label for="firstName">First Name</mat-label>
+              <input matInput formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f_application.firstName.errors }" required/>
+              <div *ngIf="submitted && f_application.firstName.errors" class="invalid-feedback">
+                  <div *ngIf="f_application.firstName.errors.required">First Name is required</div>
+              </div>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label for="lastName">Last Name</mat-label>
+              <input matInput formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f_application.lastName.errors }" required/>
+              <div *ngIf="submitted && f_application.lastName.errors" class="invalid-feedback">
+                  <div *ngIf="f_application.lastName.errors.required">Last Name is required</div>
+              </div>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label for="username">Username</mat-label>
+              <input matInput formControlName="username" [ngClass]="{ 'is-invalid': submitted && f_application.username.errors }" required/>
+              <div *ngIf="submitted && f_application.username.errors" class="invalid-feedback">
+                  <div *ngIf="f_application.username.errors.required">Username is required</div>
+              </div>
+            </mat-form-field>
+
+          </div>
+
+          <div class="form-group">
+
+              <mat-form-field appearance="outline">
+                <mat-label for="username">E-mail</mat-label>
+                <input matInput formControlName="email" [ngClass]="{ 'is-invalid': submitted && f_application.email.errors }" required/>
+                <div *ngIf="submitted && f_application.email.errors" class="invalid-feedback">
+                  <div *ngIf="f_application.email.errors.required">Email is required</div>
+                  <div *ngIf="f_application.email.errors.email">Email must be included @ sign.</div>
+                </div>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label for="password">Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f_application.password.errors }" required/>
+                <div *ngIf="submitted && f_application.password.errors" class="invalid-feedback">
+                  <div *ngIf="f_application.password.errors.required">Password is required</div>
+                  <div *ngIf="f_application.password.errors.minlength">Password must be at least 6 characters</div>
+              </div>
+              <button mat-icon-button style="outline: none; border: none; background: none;" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+
+
+             <!-- <mat-form-field appearance="outline">
+                <mat-label>Category</mat-label>
+                <select  formControlName="category" matNativeControl [ngClass]="{ 'is-invalid': submitted && f_application.category.errors }" required>
+                  <mat-option *ngFor="let cat of categories" [value]="cat">{{cat}}</mat-option>
+                </select>
+                <div *ngIf="submitted && f_application.category.errors" class="invalid-feedback">
+                  <div *ngIf="f_application.category.errors.required">Category is required</div>
+                </div>
+              </mat-form-field> -->
+
+              <mat-form-field appearance="outline" *ngIf="categories && categories.length > 0" style="max-height: 55px;max-width: fit-content;">
+                <mat-label>Category</mat-label>
+                <select matNativeControl formControlName="category" [ngClass]="{ 'is-invalid': submitted && f_application.category.errors }" required>
+                  <option  *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
+                </select>
+                <div *ngIf="submitted && f_application.category.errors" class="invalid-feedback">
+                  <div *ngIf="f_application.category.errors.required">Category is required</div>
+                </div>
+              </mat-form-field>
+
+
+          </div>
+
+          <div class="form-group">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label for="description">Description</mat-label>
+            <textarea matInput formControlName="description" style="resize: none;"  [ngClass]="{ 'is-invalid': submitted && f_application.description.errors }" required></textarea>
+            <div *ngIf="submitted && f_application.description.errors" class="invalid-feedback">
+              <div *ngIf="f_application.description.errors.required">Description is required</div>
+          </div>
+          </mat-form-field>
+
+
+
+          <div class="form-group">
+
+
+              <label  class="btn" style="background-color: #dededc; margin: 0px;">Upload your CV
+                <input type="file" id="File" formControlName="cv" accept="image/*" [ngClass]="{ 'is-invalid': submitted && f_application.cv.errors }" (change)="selectCV($event)" required/>
+              </label >
+
+                <div *ngIf="submitted && f_application.cv.errors" class="invalid-feedback">
+                  <div *ngIf="f_application.cv.errors.required">CV is required</div>
+                  </div>
+          </div>
+
+              <button [disabled]="loading" class="btn btn-primary mt-10" style="float: right;">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"  [routerLink]="['/#']"></span>
+                Apply
+              </button>
+
+          </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

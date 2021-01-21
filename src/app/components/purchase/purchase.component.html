@@ -1,0 +1,352 @@
+
+
+<div *ngIf = "user && user.userType === 'non-premium'">
+
+  <div class="card">
+    <p-steps [model]="items" [readonly]="true" [activeIndex]="active" ></p-steps>
+  </div>
+    <div class="card-inner" [hidden]="items[0].visible">
+      <div class="purchase-first">
+        <div class="row">
+          <div class="col">
+            <img src="../../../assets/purchase-icon.png"/>
+            <span></span>
+          </div>
+
+          <div class="col">
+            <div>
+              <h1> <a href="#"><span>Rec</span>ture</a></h1>
+              <div class="p-fluid p-formgrid p-grid premium-grid-text">
+                      <label > Watch Instructor's Videos</label>
+                      <label>Enroll a course</label>
+                      <label>Gain experience about more topics</label>
+                      <label>Support your lessons</label>
+                      <label>Ask questions to insturtors</label>
+              </div>
+              <label for="cvv" style="margin-bottom: 10px;">Go to purchase <span style="font-weight: bold;border:none!important;box-shadow: none;">Premium Account</span>, continue to LEARN !</label>
+              <div class="row premium" >
+                  <div class="col-md-7 col-xs-7 col-sm-7 premium-text">
+                      <label >Premium Account</label>
+
+                  </div>
+                  <div class="col-md-5 col-xs-5 col-sm-5 premium-cost">
+                      <label  class="cost">14.90 $ </label>
+                      <label class="month">per/month</label>
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <div class="p-grid p-nogutter p-justify-between button-shop">
+          <button  [disabled]="loading" class="btn btn-primary " (click)="nextPage(1)" icon="pi pi-angle-right" iconPos="right">Next</button>
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        </div>
+      </div>
+  </div>
+
+
+  <div  class="card-inner" [hidden]="items[1].visible">
+    <div><label for="cvv" style="margin-bottom: 10px;font-size: 24pt;font-weight: bold;">Let's complete the payment informations then enjoy ! </label></div>
+      <div class="register-form" >
+        <form [formGroup]="purchaseForm" (ngSubmit)="onSubmitPurchase()">
+            <div class="form-group">
+              <div class="payment-card">
+                <ngx-payment-card style="font-size: 55px;"
+                class="card-display"
+                #ngxPaymentCard
+                    [IBAN]="card?.value"
+                    [expirationText]=""
+                    [expirationDate]="date1"
+                    [securityCode]="sc?.value"
+                    [name]="name?.value">
+                </ngx-payment-card>
+
+                <div class="payment-card-form">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="cardno">Card Number</mat-label>
+                        <input #card matInput formControlName="cardno" maxlength="16" (focus)="ngxPaymentCard.flip(true)" [ngClass]="{ 'is-invalid': submitted && f_purchase.cardno.errors }"required/>
+                        <div *ngIf="submitted && f_purchase.cardno.errors" class="invalid-feedback">
+                          <div *ngIf="f_purchase.cardno.errors.required">Card Number is required</div>
+                      </div>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="name">Name</mat-label>
+                        <input #name type="text" formControlName="name" matInput (focus)="ngxPaymentCard.flip(true)"  [ngClass]="{ 'is-invalid': submitted && f_purchase.name.errors }" required/>
+                        <div *ngIf="submitted && f_purchase.name.errors" class="invalid-feedback">
+                          <div *ngIf="f_purchase.name.errors.required">Name is required</div>
+                      </div>
+                    </mat-form-field>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <p-calendar [(ngModel)]="date1" formControlName="date" view="month" dateFormat="mm/yy" [required]="true" placeholder="Expiration Date" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true" inputId="expiration" required></p-calendar>
+                        </div>
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Security Code</mat-label>
+                                <input #sc matInput maxlength="3"  formControlName="cvc" (focus)="ngxPaymentCard.flip(false)" [ngClass]="{ 'is-invalid': submitted && f_purchase.cvc.errors }" required/>
+                                <div *ngIf="submitted && f_purchase.cvc.errors" class="invalid-feedback">
+                                  <div *ngIf="f_purchase.cvc.errors.required">Security Code is required</div>
+                              </div>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="p-grid p-nogutter p-justify-between button-shop">
+                  <button  [disabled]="loading" class="btn btn-primary " (click)="nextPage(2)" icon="pi pi-angle-right" iconPos="right">Next</button>
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                </div>
+              </div>
+          </div>
+        </form>
+    </div>
+  </div>
+
+
+  <div  class="card-inner" [hidden]="items[2].visible">
+
+    <div class="purchase-complete">
+      <div style="display: grid;">
+          <label for="cvv" style="margin-bottom: 35px; font-size: 22pt;font-weight: 600;">Check your e-mail for confirmation code</label>
+      </div>
+    </div>
+
+    <div class="register-form" >
+      <form [formGroup]="confForm" (ngSubmit)="onSubmitCon()">
+          <div class="form-group">
+
+              <mat-form-field appearance="outline">
+                  <mat-label for="code">Confirmation Code</mat-label>
+                  <input matInput formControlName="code" [ngClass]="{ 'is-invalid': submitted && f_conf.code.errors }"required/>
+                  <div *ngIf="submitted && f_conf.code.errors" class="invalid-feedback">
+                    <div *ngIf="f_conf.code.errors.required">Code is required</div>
+                  </div>
+              </mat-form-field>
+              <p style="font-size: large; color: #f44336;" *ngIf="!wrongCode">
+                {{errorMessage}}
+              </p>
+          </div>
+
+          <div class="form-group">
+            <div class="p-grid p-nogutter p-justify-between button-shop">
+              <button class="btn btn-primary " icon="pi pi-angle-right" iconPos="right">Next</button>
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            </div>
+          </div>
+      </form>
+    </div>
+
+  </div>
+
+
+  <div class="card-inner"  [hidden]= "items[3].visible" >
+
+          <div class="logo">
+              <label for="cvv" style="margin-bottom: 10px;font-size: 24pt;font-weight: bold;">WELCOME TO OUR PREMIUM FAMILY !</label><br>
+              <img style="width: 300px;" src="../../../assets/premium.svg"/>
+          </div>
+
+          <div style="display: grid;">
+
+              <label for="cvv" >You have purchased an <span style="font-weight: bold;border:none!important;box-shadow: none;">PREMIUM ACCOUNT</span> now.</label>
+              <label style="margin-bottom: 10px;" >Go to the mailbox and learn more information about the premium account! </label>
+              <label for="cvv" style="margin-bottom: 35px; font-size: 22pt;font-weight: 600;">Enjoy the privileged world of premium account!</label>
+          </div>
+
+  </div>
+
+</div>
+
+<div *ngIf = "user && user.userType === 'premium'">
+
+  <div class="card">
+    <p-steps [model]="itemsPremium" [readonly]="true" [activeIndex]="active" ></p-steps>
+  </div>
+    <div class="card-inner" [hidden]="itemsPremium[0].visible">
+      <div class="purchase-first">
+        <div class="row">
+          <div class="col">
+            <img src="../../../assets/purchase.png"/>
+            <span></span>
+          </div>
+
+          <div class="col">
+            <div>
+              <h1> <a href="#"><span>Rec</span>ture</a></h1>
+
+              <div class="p-fluid p-formgrid p-grid premium-grid-text">
+                      <label >If your credit to lecture is over,</label>
+                      <label> you want to buy more lessons right away,</label>
+              </div>
+              <label for="cvv" style="margin-bottom: 10px;">Click next and continue to LEARN !</label>
+              <div class="row premium" style="margin-top:5%;">
+                  <div class="col-md-7 col-xs-7 col-sm-7 premium-text">
+                      <label >Take Credit</label>
+
+                  </div>
+                  <div class="col-md-5 col-xs-5 col-sm-5 premium-cost" >
+                      <label  class="cost">2.00 $ </label>
+                      <label class="month">per/lecture</label>
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <div class="p-grid p-nogutter p-justify-between button-shop">
+          <button  [disabled]="loading" class="btn btn-primary " (click)="selectCredit(1,0)" icon="pi pi-angle-right" iconPos="right">Next</button>
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        </div>
+      </div>
+  </div>
+
+  <div  class="card-inner" [hidden]="itemsPremium[1].visible">
+    <div><label for="cvv" style="margin-bottom: 15px;margin-top: 20px;;font-size: 24pt;font-weight: bold;">Click to buy extra lessons and register for new lessons!</label></div>
+      <div class="register-form" style="margin-left:0%;width: 100%;">
+
+          <div class="row" style="display: flex;justify-content: center;">
+
+            <mat-card class="col-3 example-card" style="margin-right: 2%; height: 310px;width: 250px !important; margin-left: 2%;">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Credit x1</mat-card-title>
+
+              </mat-card-header>
+              <img mat-card-image src="../../../assets/video (1).png" style="width:150px;height:150px;"alt="Photo of a Shiba Inu">
+              <mat-card-content>
+                <p style="color: #df3b31;font-size: large;">
+                  2.00$
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <mat-radio-group [attr.disabled]="isDisabledState === true" [(ngModel)]="credit">
+                  <mat-radio-button class="example-margin"  value="1">1</mat-radio-button>
+                </mat-radio-group>
+              </mat-card-actions>
+            </mat-card>
+
+            <mat-card class="col-3 example-card"  style="margin-right: 2%; height: 310px;width: 250px !important; margin-left: 2%;">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Credit x3</mat-card-title>
+
+              </mat-card-header>
+              <img mat-card-image src="../../../assets/video (1).png" style="width:150px;height:150px;"alt="Photo of a Shiba Inu">
+              <mat-card-content>
+                <p style="color: #df3b31;font-size: large;">
+                  5.00$
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <mat-radio-group [attr.disabled]="isDisabledState === true" [(ngModel)]="credit">
+                  <mat-radio-button class="example-margin" value="3">3</mat-radio-button>
+                </mat-radio-group>
+
+              </mat-card-actions>
+            </mat-card>
+
+            <mat-card class="col-3 example-card"  style="margin-right: 2%; height: 310px;width: 250px !important; margin-left: 2%;">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Credit x5</mat-card-title>
+
+              </mat-card-header>
+              <img mat-card-image src="../../../assets/video (1).png" style="width:150px;height:150px;"alt="Photo of a Shiba Inu">
+              <mat-card-content>
+                <p style="color: #df3b31;font-size: large;">
+                  8.00$
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <mat-card-content>
+                  <section class="example-section">
+                    <mat-radio-group [attr.disabled]="isDisabledState === true" [(ngModel)]="credit">
+                      <mat-radio-button class="example-margin" value="5">5</mat-radio-button>
+                    </mat-radio-group>
+                  </section>
+                </mat-card-content>
+              </mat-card-actions>
+            </mat-card>
+
+          </div>
+
+          <div class="form-group">
+            <div class="p-grid p-nogutter p-justify-between button-shop">
+              <button  [disabled]="loading" class="btn btn-primary " (click)="selectCredit(2,credit)" icon="pi pi-angle-right" iconPos="right">Next</button>
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            </div>
+          </div>
+
+      </div>
+  </div>
+
+  <div  class="card-inner" [hidden]="itemsPremium[2].visible">
+
+    <div class="purchase-complete">
+      <div style="display: grid;">
+          <label for="cvv" style="margin-bottom: 35px; font-size: 22pt;font-weight: 600;">Check your e-mail for confirmation code</label>
+      </div>
+    </div>
+
+    <div class="register-form" >
+      <form [formGroup]="confForm" (ngSubmit)="onSubmitPremium()">
+          <div class="form-group">
+
+              <mat-form-field appearance="outline">
+                  <mat-label for="code">Confirmation Code</mat-label>
+                  <input matInput formControlName="code" [ngClass]="{ 'is-invalid': submitted && f_conf.code.errors }"required/>
+                  <div *ngIf="submitted && f_conf.code.errors" class="invalid-feedback">
+                    <div *ngIf="f_conf.code.errors.required">Code is required</div>
+                  </div>
+
+              </mat-form-field>
+
+              <p style="font-size: large; color: #f44336;" *ngIf="!wrongCode">
+                {{errorMessage}}
+              </p>
+
+          </div>
+
+          <div class="form-group">
+            <div class="p-grid p-nogutter p-justify-between button-shop">
+              <button class="btn btn-primary " icon="pi pi-angle-right" iconPos="right">Next</button>
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            </div>
+          </div>
+      </form>
+    </div>
+
+  </div>
+
+
+  <div class="card-inner" [hidden]= "itemsPremium[3].visible">
+
+          <div class="logo">
+              <label for="cvv" style="margin-bottom: 10px;font-size: 24pt;font-weight: bold;">WELCOME TO OUR PREMIUM FAMILY !</label><br>
+              <img style="width: 300px;" src="../../../assets/premium.svg"/>
+          </div>
+
+          <div style="display: grid;">
+
+              <label for="cvv" >You have purchased an <span style="font-weight: bold;border:none!important;box-shadow: none;">PREMIUM ACCOUNT</span> now.</label>
+              <label style="margin-bottom: 10px;" >Go to the mailbox and learn more information about the premium account! </label>
+              <label for="cvv" style="margin-bottom: 35px; font-size: 22pt;font-weight: 600;">Enjoy the privileged world of premium account!</label>
+          </div>
+
+  </div>
+
+</div>
+
+
+
+
+

@@ -1,0 +1,503 @@
+
+header {
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+}
+
+.toggle,
+[id^=drop] {
+    display: none;
+}
+
+nav {
+    margin: 0;
+    padding: 0;
+    padding-top: 0px !important;
+}
+
+
+#logo a {
+    float: left;
+    font-size: 0.8em;
+    display: initial;
+    margin: 0;
+    letter-spacing: 1px;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 100;
+
+}
+
+#logo a span {
+    background: #fff;
+    color: #df3b31;
+    padding: 2px 10px;
+    font-weight: 800;
+    margin-right: 5px;
+}
+
+.shop-icon{
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+}
+
+
+
+nav:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+nav ul {
+    float: right;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+}
+
+
+nav ul li {
+    margin: 0px;
+    display: inline-block;
+    float: left;
+}
+
+
+.menu li a {
+    font-weight: bold;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+    margin: 0 1em;
+    color: #fff;
+    text-transform: uppercase;
+    -webkit-transition: 0.5s all ease;
+    -moz-transition: 0.5s all ease;
+    -o-transition: 0.5s all ease;
+    -ms-transition: 0.5s all ease;
+}
+
+
+
+nav .menu li a:hover {
+    color: #df3b31;
+}
+
+.menu li.active a {
+    color: #df3b31;
+}
+
+
+nav ul ul {
+    display: none;
+    position: absolute;
+    top: 30px;
+    background: #fff;
+}
+
+nav ul li:hover > ul {
+    display: inherit;
+}
+
+
+nav ul ul li {
+    width: 100px;
+    float: none;
+    display: list-item;
+    position: relative;
+}
+
+nav ul ul li a {
+    color: #333;
+    display: block;
+    padding: 5px;
+
+}
+
+nav ul ul ul li {
+    position: relative;
+    top: -60px;
+    left: 100px;
+}
+
+
+
+
+li > a:only-child:after {
+    content: '';
+}
+
+@media all and (max-width: 768px) {
+
+    #logo {
+        display: block;
+        padding: 0;
+        width: 100%;
+        text-align: center;
+        float: none;
+        margin-right: 5px;
+    }
+
+    nav {
+        margin: 0;
+        padding-top: 0px !important;
+    }
+    .toggle + a,
+    .menu {
+        display: none;
+    }
+    .toggle {
+        display: block;
+        padding: 8px 20px;
+        font-size: 0.8em;
+        text-decoration: none;
+        border: none;
+        float: right;
+        background-color: #ffffff;
+        color: #333;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+    .menu .toggle {
+        float: none;
+        text-align: center;
+        margin: auto;
+        width: 80%;
+        padding: 5px;
+        font-weight: normal;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .toggle:hover {
+        color: #333;
+        background-color: #fff;
+    }
+
+
+    [id^=drop]:checked + ul {
+        display: block;
+        background: rgba(16, 16, 16, 0.85);
+        padding: 15px 0;
+        text-align: center;
+    }
+
+    nav ul li {
+        display: block;
+        width: 100%;
+        padding: 5px 0;
+    }
+
+    nav ul ul .toggle,
+    nav ul ul a {
+        padding: 0 40px;
+    }
+
+    nav ul ul ul a {
+        padding: 0 80px;
+    }
+
+    nav a:hover,
+    nav ul ul ul a {
+        background-color: transparent;
+    }
+
+    nav ul li ul li .toggle,
+    nav ul ul a,
+    nav ul ul ul a {
+        padding: 14px 20px;
+        color: #FFF;
+        font-size: 17px;
+    }
+
+
+    nav ul li ul li .toggle,
+    nav ul ul a {
+        background-color: #212121;
+    }
+
+    nav ul ul {
+        float: none;
+        position: static;
+        color: #ffffff;
+    }
+
+    nav ul ul li:hover > ul,
+    nav ul li:hover > ul {
+        display: none;
+    }
+    nav ul ul li {
+        display: block;
+        width: 100%;
+        padding: 0;
+    }
+
+    nav ul ul ul li {
+        position: static;
+    }
+
+    nav ul ul li a {
+        color: #fff;
+        font-size: 0.85em;
+    }
+}
+
+@media all and (max-width: 330px) {
+
+    nav ul li {
+        display: block;
+        width: 94%;
+    }
+
+
+}
+::ng-deep .purchase .p-dialog {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: auto;
+    position: relative;
+    transform: scale(1);
+
+}
+
+::ng-deep .p-button {
+    color: #ffffff;
+    background: #df3b31;
+    border: 1px solid #df3b31;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 3px;
+}
+
+::ng-deep .p-button.p-button-text {
+    background-color: transparent;
+    color: #df3b31;
+    border-color: transparent;
+}
+::ng-deep .p-button.p-button-text:enabled:hover {
+    background-color: transparent;
+    color: #7d1913;;
+    border-color: transparent;
+  }
+::ng-deep .p-button.p-button-text:enabled:active {
+    background-color: transparent;
+    color: #7d1913;;
+    border-color: transparent;
+  }
+::ng-deep .p-button:enabled:hover {
+    color: #ffffff;
+    background: #7d1913;
+    border: 1px solid #7d1913;;
+}
+::ng-deep .p-button:enabled:active {
+    color: #ffffff;
+    background: #7d1913;;
+    border: 1px solid #7d1913;;
+}
+
+::ng-deep .p-dialog.p-confirm-dialog .p-confirm-dialog-icon {
+    font-size: 2rem;
+    color: #df3b31;
+}
+:ng-deep .p-button:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none !important;
+}
+
+
+::ng-deep .purchase .p-dialog .p-dialog-content {
+    background: #ffffff;
+    color: #495057;
+    padding: 0 1.5rem 0rem 1.5rem;
+    overflow-y: inherit;
+}
+
+.dropbtn {
+    font-size: 16px;
+    border: none;
+    background:transparent;
+    
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    height: 70px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color:#df3b31;}
+
+  .footer-div{
+    bottom: 0;
+    width: 100%;
+    display: flow-root;
+}
+
+
+.footer_1its {
+    background:#b5b5b5;
+    height: 18em;
+}
+
+
+.footer p,
+.footer a {
+    color: #df403c;
+    margin: 8px 0;
+    font-size: 14pt;
+}
+
+
+.footer-grid:nth-child(2) {
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+.footer ul li.hd {
+    color: #fff;
+}
+
+
+.flickr-grid {
+    float: left;
+    width: 32%;
+    margin: 0 0.1em .2em;
+}
+
+.flickr-grid a img {
+    width: 100%;
+    padding: 0.3em;
+    border: 1px solid #fff;
+}
+
+button.btn1 {
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    background: none;
+    cursor: pointer;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    transition: 0.5s all;
+    float: right;
+    width: 15%;
+}
+
+.footer-grid_section_1its form {
+    border: 1px solid #fff;
+    width: 100%;
+    margin-top: 20px;
+}
+
+ul.social_section_1info li {
+    display: inline-block;
+}
+
+ul.social_section_1info {
+    margin-top: 20px;
+}
+
+ul.social_section_1info a {
+    color: #717580;
+    margin-right: 10px;
+    font-size: 13.5px;
+    width: 35px;
+    height: 35px;
+    background: #121215;
+    padding: 9px 20px;
+    text-align: center;
+    line-height: 35px;
+    letter-spacing: 1px;
+    border-radius: 4px;
+}
+
+
+ul.links li {
+    list-style-type: none;
+    margin: 5px 0;
+}
+
+.footer-title-w3ls a {
+    font-size: 3em;
+    text-transform: capitalize;
+    font-weight: 100;
+    color:#df403c;
+}
+
+.footer-title-w3ls a span {
+    background: #ffff;
+    color: #df403c;
+    padding: 1px 11px;
+    font-weight: 800;
+}
+
+.footer-grid_section {
+    width: 60%;
+    margin: auto;
+}
+
+li.facebook a {
+    color: #fff;
+    background: #3b5998;
+}
+
+li.twitter a {
+    color: #fff;
+    background: #1da1f2;
+}
+
+li.google a {
+    color: #fff;;
+    background:#dd4b39;
+}
+
+li.linkedin a {
+    color: #fff;
+    background: #0077b5;
+}
+
+a.move-top span {
+    width: 36px;
+    height: 36px;
+    color: #df403c;
+    border: transparent;
+    line-height: 2em;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+

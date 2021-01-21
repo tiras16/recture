@@ -1,0 +1,50 @@
+<div class="card" style="display:none">
+    <p-steps [readonly]="true" [activeIndex]="active" ></p-steps>
+  </div>
+  
+  
+  <div class="container">
+  
+      <div class="register-form" style="float:right; opacity: 92%;" >
+  
+        <div class="example-container">
+            <form [formGroup]="addForm" (ngSubmit)="onSubmitAdd()">
+                
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label for="Title">Title</mat-label>
+                    <input matInput formControlName="title" [ngClass]="{ 'is-invalid': submitted && f_add.title.errors }" required/>
+                    <div *ngIf="submitted && f_add.title.errors" class="invalid-feedback">
+                        <div *ngIf="f_add.title.errors.required">First Name is required</div>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label for="description">Description</mat-label>
+                    <textarea matInput formControlName="description" style="resize: none;"  [ngClass]="{ 'is-invalid': submitted && f_add.description.errors }" required></textarea>
+                    <div *ngIf="submitted && f_add.description.errors" class="invalid-feedback">
+                    <div *ngIf="f_add.description.errors.required">Description is required</div>
+                </div>
+                </mat-form-field>
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label for="Url">Url</mat-label>
+                        <input matInput formControlName="videoUrl" />
+                    </mat-form-field>
+                </div>
+                <!-- <div>
+                    <label  class="btn" style="background-color: #dededc; margin: 0px;">Upload video
+                        <input type="file" id="File" [ngClass]="{ 'is-invalid': submitted && f_add.video.errors }" (change)="selectCV($event)" required/>
+                    </label >
+                </div> -->
+      
+                    <button [disabled]="loading" class="btn btn-primary mt-10" style="float: right;">
+                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"  [routerLink]="['/#']"></span>
+                      Add Video
+                    </button>
+                </div>
+            </form>
+        </div>
+      </div>
+  </div>

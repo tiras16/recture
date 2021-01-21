@@ -1,0 +1,80 @@
+
+<div>
+    <header class="header">
+        <div class="container-fluid px-lg-5">
+            <!-- nav -->
+            <nav class="py-4">
+                <div id="logo">
+                    <h1> <a href="#"><span>Rec</span>ture</a></h1>
+                </div>
+                <ul class="menu mt-2">
+                    <li><a href="">Home</a></li>
+                    <!-- <li><a href="/#/courses">Courses</a></li>
+                    <li><a href="/#/lecturers">Lecturers</a></li> -->
+                    <li *ngIf="user && user.userType !== 'visitor' "><a href="/#/lecturers">Lecturers</a></li>
+                    <li *ngIf="user && user.userType !== 'visitor'  "><a href="/#/question-panel">Chat</a></li>
+                    <li *ngIf="user && user.userType !== 'visitor' "><a href="/#/courses">Courses</a></li>
+                    <li><a href="/#/contact">Contact</a></li>
+                    <li *ngIf="user && (user.userType === 'premium' || user.userType === 'instructor' || user.userType === 'admin')" ><a href="/#/asktoteacher">Ask to Teacher</a></li>
+                    <li *ngIf="user"><a *ngIf="user && user.userType === 'admin' " href="/#/admin" style="margin: 0px 5px 0px 5px;">{{user.username}}</a></li>
+                    <li *ngIf="user"><a *ngIf="user && user.userType === 'instructor' " href="/#/lecturerprofile/{{user.idUser}}" style="margin: 0px 5px 0px 5px;">{{user.username}}</a></li>
+                    <li *ngIf="user"><a *ngIf="user && (user.userType === 'premium' || user.userType === 'non-premium')"  style="margin: 0px 5px 0px 5px;">{{user.username}}</a></li>
+                    <li *ngIf="user && (user.userType === 'non-premium' || user.userType === 'premium')"><button type="button" class="shop-icon" data-toggle="modal" (click)="showDialog()">
+                      <i style="font-size: 18px"  class="fa fa-shopping-cart"></i>
+                    </button></li>
+
+                    <li class="dropdown">
+                        <button *ngIf="user" class="dropbtn" ><i class="fa fa-angle-double-down" style="color:white"></i></button>
+                        <div class="dropdown-content" style="right:0;">
+                            <button type="button" class="shop-icon" style="color:#df3b31; margin-top: 3%; margin-bottom: 3%;" data-toggle="modal" (click)="signOut()">
+                                <i  style="color:#df3b31; font-size: 21px" class="fa fa-sign-out" aria-hidden="true"></i>Logout
+                            </button><br>
+                            <button type="button" class="shop-icon" style="color:#df3b31; margin-top: 3%; margin-bottom: 3%;" data-toggle="modal" (click)="deleteAccount()">
+                                <i class="fa fa-user-times" style="color:#df3b31;font-size: 21px"></i> Delete Account
+                            </button>
+                        </div>
+                    </li>
+                    <!-- <li *ngIf="user && (user.userType === 'premium')" >{{user.credit}}</li> -->
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+</div>
+<router-outlet></router-outlet>
+
+<div style="display: flow-root;">
+    <footer>
+        <section class="footer footer_1its">
+            <div class="container py-md-4" style="padding-top: 5em !important;">
+                <div class="footer-grid_section text-center">
+                    <div class="footer-title-w3ls mb-3">
+                        <a href=""><span>Rec</span>ture</a>
+                    </div>
+                    <div class="footer-text">
+                        <p>You can follow us on social media</p>
+                    </div>
+                    <ul class="social_section_1info">
+                        <li class="mb-2 facebook"><a href="#"><span class="fa fa-facebook mr-1"></span>facebook</a></li>
+                        <li class="mb-2 twitter"><a href="#"><span class="fa fa-twitter mr-1"></span>twitter</a></li>
+                        <li class="google"><a href="#"><span class="fa fa-google-plus mr-1"></span>google</a></li>
+                        <li class="linkedin"><a href="#"><span class="fa fa-linkedin mr-1"></span>linkedin</a></li>
+                    </ul>
+                </div>
+                <!-- <div class="move-top-w3layouts text-center mt-3">
+                    <a href="#contact" class="move-top"> <span class="fa fa-angle-up  mb-3" aria-hidden="true"></span></a>
+                </div> -->
+
+            </div>
+        </section>
+    </footer>
+</div>
+
+
+
+
+<p-dialog header="Purchase" class="purchase" [(visible)]="display" [modal]="true" [draggable]="false" [resizable]="false">
+        <app-purchase></app-purchase>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '50vw'}"  [baseZIndex]="10000" defaultFocus="none" rejectButtonStyleClass="p-button-text"></p-confirmDialog>

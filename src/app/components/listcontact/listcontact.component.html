@@ -1,0 +1,71 @@
+
+<div>
+  <div class="banner-content">
+  </div>
+    <div id="inner-nav"></div>
+    <div id="container" >
+      <div id="profile">
+
+        <div id="image" style="margin-bottom: 10px;">
+          <img id="profile-photo" src= "http://3.10.154.164/return-files/{{admin.ImageUrl}}" alt="Profile-Image">
+        </div>
+
+          <p id="name" >{{admin.firstName}} {{admin.lastName}}<br></p>
+          <hr width="100%">
+          <p style="color:#8c9398">E-mail<br><span id="email">{{admin.email}}</span></p>
+
+        <div class="ban-buttons" style="width: max-content;">
+          <a href="/#/admin/contacts" class="btn" id="options">Contacts</a><br>
+          <a href="/#/admin/users" class="btn" id="options">Users</a><br>
+          <a href="/#/admin/applications" class="btn" style="margin-bottom: 15%;" id="options">Applications</a>
+        </div>
+
+      </div>
+
+
+        <div id="info-cards">
+          <h2>Contact Messages </h2>
+          <div class="card" >
+
+          <mat-card-content style="margin-bottom: 5px;">
+            <section class="example-section" >
+              <mat-radio-group [(ngModel)]="mType" (change)="onFilter()">
+                <mat-radio-button class="example-margin" value="All">All</mat-radio-button>
+                <mat-radio-button class="example-margin" value="Complaint">Complaint</mat-radio-button>
+                <mat-radio-button class="example-margin" value="Suggestion">Suggestion</mat-radio-button>
+                <mat-radio-button class="example-margin" value="Other">Other</mat-radio-button>
+              </mat-radio-group>
+            </section>
+          </mat-card-content>
+
+
+
+          <div class="card-div" *ngFor="let message of listArray" >
+            <mat-card class="example-card" id="messages">
+              <div class="row">
+
+
+                  <mat-card-header class="mat-card-header-text" style="margin-left: 2%">
+                    <mat-card-title style="font-family: 'Open Sans', sans-serif;">{{message.id}}. {{message.name}}</mat-card-title>
+                    <mat-card-subtitle style="font-family: 'Open Sans', sans-serif; margin-bottom: 0%;">{{message.email}}</mat-card-subtitle>
+                  </mat-card-header>
+
+                  <button type="button" class="banbutton"><i style="font-size: 25px;"class="fa fa-trash" aria-hidden="true" (click)="deleteContact(message.id)"></i></button>
+              </div>
+
+                <mat-card-content style="margin-bottom: 5px;">
+                  <mat-card-subtitle style="font-size: 16px; margin-left:2%;">
+                    {{message.message}}
+                  </mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+          </div>
+          </div>
+
+      </div>
+
+      </div>
+
+    </div>
+    
+

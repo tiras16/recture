@@ -1,0 +1,26 @@
+<div>
+  <div class="banner-content" id="lecturers">
+  </div>
+  <section class="ab-info-main py-md-5 py-4" style="  display: -webkit-inline-box;">
+    <div style=" margin-top: -75px; margin-bottom: 65px;">
+     <div class="card-list" *ngFor = "let simge of category">
+        <div class="flip-box">
+          <div class="flip-box-inner">
+            <div class="flip-box-front">
+              <span>{{simge}}</span>
+            </div>
+            <div class="flip-box-back">
+              <div *ngFor="let lecturer of imageObject" >
+                <ng-container >
+                <a class="lecturers-design" *ngIf= "simge ===lecturer.categories[0]" href="#/lecturerprofile/{{lecturer.idUser}}">{{lecturer.name}} {{lecturer.surname}}</a>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+

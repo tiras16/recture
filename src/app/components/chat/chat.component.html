@@ -1,0 +1,51 @@
+<body style="background: url('../../../assets/black.jpg');display:grid;padding-bottom: 20px;background-size: cover;background-color:  hsla(0,0%,64%,0.40);background-blend-mode: overlay;">
+<div class="banner-content" id="chat"></div>
+
+<div id="frame">
+	<div class="content">
+		<div class="messages">
+			<ul *ngFor="let item of messages let i=index">
+				<li [ngClass]="item.userId === this.user.id ? 'replies' : 'sent'">
+                    <div class="user-profile">
+                        <label>{{item.username}}</label>
+                        <img src="http://3.10.154.164/return-files/{{item.userImg}}" alt="" />
+                    </div>
+                    <div>
+                        <div class="message-panel">
+                            <p (click)="messageClick(i)">{{item.message}}</p>
+                            <img  *ngIf="item.image" src="http://3.10.154.164/return-files/{{item.image}}" [alt]="questions" style="cursor: pointer" (click)="imageClick(item.image)"/>
+                        </div>
+                        <span>{{item.date | date:"dd/MM/YYYY"}}</span>
+                        <!-- <i class="fa fa-times" aria-hidden="true" *ngIf="item.visible"> Complain!</i> -->
+                    </div>
+				</li>
+			</ul>
+		</div>
+		<div class="message-input" *ngIf="this.user && this.user.userType !== 'instructor'">
+			<div class="wrap">
+                <textarea name="Text1" cols="40" rows="5" placeholder="Write your message..." [(ngModel)]="newMessage"></textarea>
+                <div class="image-upload">
+                    <label for="file-input">
+                        <i class="fa fa-picture-o attachment"  aria-hidden="true"  for="file-input"></i>
+                    </label>
+                    <input type="file" id="file-input" name="file-input" accept="image/*" style="display:none" (change)="selectFiles($event)" />
+                </div>
+                <button class="submit" (click)="sendMessage(newMessage)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div *ngIf="viewerImage" class="viewer-container">
+    <div class="viewer-content">
+        <i class="fa fa-times" aria-hidden="true" (click) = "viewClose()"> Close !</i>
+
+    </div>
+</div> -->
+</body>
+
+<p-dialog [(visible)]="viewerImage" [modal]="false" [draggable]="false" [resizable]="false" >
+    <img class="main-img" src="http://3.10.154.164/return-files/{{viewerImageUrl}}"/>
+</p-dialog>
+
+

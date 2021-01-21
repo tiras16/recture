@@ -1,0 +1,180 @@
+
+<div>
+  <div class="banner-content">
+  </div>
+    <div id="inner-nav"></div>
+
+    <section class="ab-info-main" >
+
+      <mat-accordion>
+          <mat-expansion-panel style="margin-top: 0%;">
+             <div style="font: 300 20px Roboto, 'Raleway', sans-serif; letter-spacing: 1.1px; line-height: 1.5;" >
+             </div>
+
+            <mat-expansion-panel-header style="height: 20% !important" *ngIf="user && user.userType === 'premium' ">
+
+              <mat-panel-title style="width: 100%;">
+
+                <h3 style="margin-left: auto; margin-right: auto; font-size: 2em;
+                letter-spacing: 1px;
+                color: #e03b31;
+                "> Ask to Teacher <i class="fa fa-hand-pointer-o" aria-hidden="true"></i> </h3>
+
+              </mat-panel-title>
+              <mat-panel-description style=" margin-top: 3%; font-size: large; color: #e03b31;">
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-action-row>
+              <form [formGroup]="questionForm" (ngSubmit)="onSubmitQuestion()" style="width: 90%; margin-left: auto; margin-right: auto;">
+
+                <div class="form-group" style=" display: grid;width: 50%;margin-left: auto; margin-right: auto;">
+
+                      <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label for="Question">Question</mat-label>
+                        <textarea matInput formControlName="question" style="resize: none; border: none;" class="addquestion" [ngClass]="{ 'is-invalid': submitted && f_question.question.errors }" required></textarea>
+                        <div *ngIf="submitted && f_question.question.errors" class="invalid-feedback">
+                          <div *ngIf="f_question.question.errors.required">Question is required</div>
+                        </div>
+                      </mat-form-field>
+
+
+                    <div style="display: -webkit-box;">
+
+                      <mat-form-field appearance="outline" *ngIf="categories && categories.length > 0">
+                        <mat-label>Category</mat-label>
+                        <select matNativeControl formControlName="category" [ngClass]="{ 'is-invalid': submitted && f_question.category.errors }" required>
+                          <option  *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
+                        </select>
+                        <div *ngIf="submitted && f_question.category.errors" class="invalid-feedback">
+                          <div *ngIf="f_question.category.errors.required">Category is required</div>
+                        </div>
+                      </mat-form-field>
+
+
+                      <div  style= "margin-left: auto; margin-top:2%; display: flex;">
+
+                        <label for="file-input" class="btn btn-primary mt-10" style="height: fit-content;">
+                            <i class="fa fa-picture-o attachment"  aria-hidden="true"  for="file-input"></i>
+                        </label>
+                        <input type="file" id="file-input"  name="file-input"  accept="image/*" style="display:none" (change) = "selectImage($event)"/>
+
+                          <div style="margin-left: 2%;">
+                          <button [disabled]="loading" class="btn btn-primary mt-10">
+                            <span *ngIf="loading"></span>
+                                Submit
+                          </button>
+
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+              </form>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+      </mat-accordion>
+
+      <div class="panel-container" >
+        <div style=" margin-left: auto; margin-right: auto; display: table; margin-top:1%; margin-bottom: 10px;">
+          <p-dropdown [options]="categories" class="p-dropdown" [(ngModel)]="filterCategory" placeholder="Filter by category" (click)="onFilter()"></p-dropdown>
+        </div>
+
+        <mat-expansion-panel class="panel"  *ngFor="let question of listFilter" >
+          <hr>
+          <h2>ANSWERS</h2>
+
+          <span *ngFor="let answer of answers">
+            <div *ngIf="answer.qId === question.id" style="border-left: 6px solid #495057;background-color: #ececec; margin-bottom: 2%;" >
+
+              <p style="display: flex; justify-content: flex-end;">
+                {{answer.date | date :'dd-MM-yyyy'}}
+              </p>
+
+              <p class="showanswer">
+                  {{answer.answer}}
+              </p>
+
+              <img *ngIf="answer.image !== null" id="profile-photo" style="max-width:400px; min-width:400px; margin: auto;" src= "http://3.10.154.164/return-files/{{answer.image}}" alt="Profile-Image">
+              <div style="font: Roboto, 'Raleway', sans-serif; font-size: small; color: black; display: flex; justify-content: flex-end;">
+                <a href="#/lecturerprofile/{{answer.insId}}">{{answer.name}}</a>
+              </div>
+            </div>
+          </span>
+
+            <mat-expansion-panel-header  style="height: inherit; "  >
+
+                <mat-panel-title >
+                    <div style=" display: grid;">
+
+                      <div style=" margin-left: 2px; margin-top: 3%; font-size:30px;">
+                        <i *ngIf="question.isanswered == 1" style="color: #51b751;" (click)="$event.stopPropagation()" class="fa fa-check-circle"></i>
+                        <i *ngIf="question.image" style="color: #5b5a58;" (click)="$event.stopPropagation()" (click)="openQuestionPhoto(question.image)" class="fa fa-image" style=" margin-left: 4px;"></i>
+                        <p>{{question.date | date :'dd-MM-yyyy'}}</p>
+                      </div>
+
+                      <div class="question">
+                          {{question.question}}
+                      </div>
+
+                    </div>
+                    </mat-panel-title>
+
+                    <p-dialog header="Question" [(visible)]="questionPhoto" [modal]="false" [draggable]="false" [resizable]="false" >
+                      <img id="profile-photo" src= "http://3.10.154.164/return-files/{{questionSrc}}" alt="Profile-Image">
+                    </p-dialog>
+
+                <div style=" display: grid;">
+                  <div class="category-header">
+                    {{question.category}}
+                  </div>
+                  <div class="category-name">
+                    {{question.username}}
+                  </div>
+                </div>
+            </mat-expansion-panel-header>
+
+          <mat-action-row *ngIf="user && user.userType === 'instructor' ">
+            <form [formGroup]="answerForm" (ngSubmit)="onSubmitAnswer()" style="width: 100%; margin: 0%;">
+              <div class="form-group" style="margin-bottom: 0%;">
+
+                <div class="grid">
+
+
+                  <mat-form-field appearance="outline" style="width: 100%; ">
+                    <mat-label for="answer">Answer</mat-label>
+                    <textarea matInput formControlName="answer" style="resize: none; border: none;" class="answerquestion" [ngClass]="{ 'is-invalid': submitted && f_answer.answer.errors }" required></textarea>
+                    <div *ngIf="submitted && f_answer.answer.errors" class="invalid-feedback">
+                      <div *ngIf="f_answer.answer.errors.required">Answer is required</div>
+                    </div>
+                  </mat-form-field>
+
+
+                  <div style="display: -webkit-box;">
+
+                    <div  style= "margin-left: auto; margin-top:2%; display: flex;">
+
+                        <label for="file-input" class="btn btn-primary mt-10">
+                            <i class="fa fa-picture-o attachment"  aria-hidden="true"  for="file-input"></i>
+                        </label>
+                        <input type="file" id="file-input"  name="file-input"  accept="image/*" style="display:none" (change) = "selectImage($event)"/>
+
+                          <div style="margin-left: 2%;">
+                          <button [disabled]="loading" class="btn btn-primary mt-10" (click)="answerQuestion(question.id)">
+                            <span *ngIf="loading"></span>
+                                Submit
+                          </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+      </div>
+
+    </section>
+    </div>
+    
